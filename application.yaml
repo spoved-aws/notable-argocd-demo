@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: webserver-argocd
+  namespace: argocd
+spec:
+  # The project the application belongs to. We can group the applications with projects
+  project: default
+  source:
+    repoURL: https://github.com/spoved-aws/k3s-cluster.git
+    targetRevision: HEAD
+    path: webserver-argocd
+
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: argocd
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true

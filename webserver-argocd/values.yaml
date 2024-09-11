@@ -1,0 +1,36 @@
+# Namespace for resources
+namespace: argocd
+
+# Replica count for the Deployment
+replicaCount: 1
+
+# Container image details
+image:
+  repository: nginx
+  tag: latest
+
+# Service configuration for ClusterIP type
+service:
+  name: webserver-argocd-service
+  type: ClusterIP
+  port: 8091
+  targetPort: 80
+
+# Service configuration for NodePort type
+nodePortService:
+  name: webserver-argocd-nodeport
+  type: NodePort
+  port: 8092
+  targetPort: 80
+  nodePort: 30009
+
+# ConfigMap configuration
+configMap:
+  name: webserver-argocd-config
+  index.html: |
+    <html>
+    <head><title>ENV: argocd</title></head>
+    <body>
+    <h1>Hello, from the webserver po deployed by argocd!</h1>
+    </body>
+    </html>
